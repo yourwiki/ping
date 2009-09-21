@@ -25,20 +25,22 @@
 			</div>
 			
 			{% if logged_in %}
-			<div class="span-16 prepend-4 append-4 question">
-				What are you working on?
-			</div>
-			<div class="span-16 prepend-4 append-4">
-				<form id="update_form" method="post" action="/ajax/update">
-					<div class="span-14">
-						<img src="http://gravatar.com/avatar/?gravatar_id=d37291b1995a2460d284d7b8f026faf9&s=60" />
-						<textarea id="update_body" name="update_body"></textarea>
-					</div>
-					<div class="span-2 update_tools last">
-						<span id="character_count">140</span><br />
-						<input type="submit" value="Ping" />
-					</div>
-				</form>
+			<div class="span-16 prepend-4 append-4" id="update_area">
+				<div class="span-16 question" id="question">
+					What are you working on?
+				</div>
+				<div class="span-16">
+					<form id="update_form" method="post" action="/ajax/update">
+						<div class="span-14">
+							<img src="http://gravatar.com/avatar/?gravatar_id=d37291b1995a2460d284d7b8f026faf9&s=60" />
+							<textarea id="update_body" name="update_body"></textarea>
+						</div>
+						<div class="span-2 update_tools last">
+							<span id="character_count">140</span><br />
+							<input type="submit" value="Ping" />
+						</div>
+					</form>
+				</div>
 			</div>
 			{% endif %}
 			

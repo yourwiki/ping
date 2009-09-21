@@ -2,6 +2,8 @@ $(document).ready(function() {
 	$("#update_body").focus();
 	
 	$("#update_form").submit(function() {
+		$("#character_count").html('<img src="/static/spinner.gif" alt="Posting..." />');
+		
 		$.ajax({
 			type: "POST",
 			url: "/ajax/update",
@@ -9,6 +11,7 @@ $(document).ready(function() {
 			dataType: "json",
 			complete: function(req, status) {
 				console.log("Request complete (" + status + ")");
+				update_character_count(); // remove spinner
 			},
 			success: function(data) {
 				console.log("Update posted successfully");
@@ -18,6 +21,9 @@ $(document).ready(function() {
 				update.hide();
 				$("#updates").prepend( update );
 				update.slideDown();
+			},
+			error: function() {
+				updater.fail();
 			}
 		});
 		
@@ -40,4 +46,31 @@ var update_character_count = function() {
 	}
 	
 	$("#character_count").text(char_left);
+	updater.reset();
+}
+
+var updater = {
+	default_message: "What are you working on?",
+	retry: false,
+	
+	reset: function() {
+		if( this.retry ) {
+			$("#update_body").css('background-color', '');
+			$("#question").css('color', '');
+			$("#question").html( this.default_message );
+			this.retry = false;
+		}
+	},
+	
+	fail: function(message) {
+		if(!message) {
+			message = "Can't connect to Ping. <a href=\"#wee\">Try again?</a>";
+		}
+
+		$("#update_body").css('background-color', '#DB707F');
+		$("#question").css('color', '#5C0002');
+		$("#question").html(message);
+		
+		this.retry = true;
+	}
 }
