@@ -12,7 +12,7 @@ $(document).ready(function() {
 			},
 			success: function(data) {
 				console.log("Update posted successfully");
-				$("#update_body").text('');
+				$("#update_body").val('');
 				update_character_count();
 				var update = $( data.update );
 				update.hide();
