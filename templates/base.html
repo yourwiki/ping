@@ -24,6 +24,7 @@
 				{% endif %}
 			</div>
 			
+			{% if logged_in %}
 			<div class="span-16 prepend-4 append-4 question">
 				What are you working on?
 			</div>
@@ -39,6 +40,7 @@
 					</div>
 				</form>
 			</div>
+			{% endif %}
 			
 			<div class="clear span-16 prepend-4 append-4 content last">
 				{% block content %}{% endblock %}
