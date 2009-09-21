@@ -44,6 +44,7 @@ class UpdateHandler(BaseHandler):
 			self.response.set_status(400)
 			return
 		
+		memcache.delete('updates', 0)
 		update.put()
 		
 		response = {
