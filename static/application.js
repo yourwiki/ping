@@ -35,6 +35,8 @@ var update_character_count = function() {
 		$("#character_count").css('color', '#D40C13');
 	} else if( char_left < 20 ) {
 		$("#character_count").css('color', '#5C0002');
+	} else {
+		$("#character_count").css('color', '#000');
 	}
 	
 	$("#character_count").text(char_left);
