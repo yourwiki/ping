@@ -5,6 +5,7 @@ import logging
 from django.utils import simplejson
 
 from google.appengine.api import users
+from google.appengine.api import memcache
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import template
 from google.appengine.ext.webapp.util import run_wsgi_app
@@ -13,9 +14,18 @@ from extensions import BaseHandler
 from models import Update
 
 class MainHandler(BaseHandler):
-  def get(self):
-	updates = Update.gql("ORDER BY posted DESC LIMIT 15")
-	self.render('index.html', { 'updates': updates })
+	def get(self):
+		updates = self.get_updates()
+		self.render('index.html', { 'updates': updates })
+	
+	def get_updates(self):
+		updates = memcache.get("updates")
+		if updates is not None:
+			return updates
+		else:
+			updates = Update.gql("ORDER BY posted DESC LIMIT 15")
+			memcache.add("updates", updates, (60 * 60 * 24 * 7))
+			return updates
 
 class UpdateHandler(BaseHandler):
 	def post(self):
