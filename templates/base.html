@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+	<head>
+		<title>Ping</title>
+		
+		<!-- Framework CSS -->
+		<link rel="stylesheet" href="/static/screen.css" type="text/css" media="screen, projection"/>
+		<link rel="stylesheet" href="/static/print.css" type="text/css" media="print"/>
+		<!--[if IE]><link rel="stylesheet" href="/static/ie.css" type="text/css" media="screen, projection"/><![endif]-->
+		<link rel="stylesheet" href="/static/style.css" type="text/css" media="screen, projection"/>
+		
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/static/application.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div class="container">
+			<div class="span-16 prepend-4 append-4 user">
+				{% if logged_in %}
+					Welcome, {{ user.nickname }}!
+					<a href="{{ auth_url }}">Logout</a>
+				{% else %}
+					<a href="{{ auth_url }}">Login</a>
+				{% endif %}
+			</div>
+			
+			<div class="span-16 prepend-4 append-4 question">
+				What are you working on?
+			</div>
+			<div class="span-16 prepend-4 append-4">
+				<form id="update_form" method="post" action="/ajax/update">
+					<div class="span-14">
+						<img src="http://gravatar.com/avatar/?gravatar_id=d37291b1995a2460d284d7b8f026faf9&s=60" />
+						<textarea id="update_body" name="update_body"></textarea>
+					</div>
+					<div class="span-2 update_tools last">
+						<span id="character_count">140</span><br />
+						<input type="submit" value="Ping" />
+					</div>
+				</form>
+			</div>
+			
+			<div class="clear span-16 prepend-4 append-4 content last">
+				{% block content %}{% endblock %}
+			</div>
+			
+			<div class="clear span-16 prepend-4 append-4 last">
+				Powered by <a href="http://ping.yourwiki.net">Ping</a>.
+			</div>
+		</div>
+	</body>
+</html>

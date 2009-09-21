@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<div class="span-16" id="updates">
+		{% for update in updates %}
+			{% include "partials/update.html" %}
+		{% endfor %}
+	</div>
+{% endblock %}

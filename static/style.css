@@ -1,0 +1,35 @@
+.question {
+	font-weight: bold;
+	font-size: 16pt;
+	margin-bottom: 5px;
+	margin-top: 10px;
+}
+
+#update_body {
+	font-size: 11pt;
+	font-family: Helvetica, Arial, sans-serif;
+	font-weight: bold;
+	height: 54px;
+	width: 460px;
+	padding: 2px;
+	margin: 0 0 0 10px;
+	resize: none;
+}
+
+.update_tools {
+	text-align: center;
+}
+
+.update_tools #character_count {
+	font-weight: bold;
+	font-size: 14pt;
+}
+
+.content {
+	margin-top: 20px;
+}
+
+.update {
+	padding-bottom: 5px;
+	margin-bottom: 10px;
+}
