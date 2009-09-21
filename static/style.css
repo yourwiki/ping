@@ -1,3 +1,8 @@
+.user {
+	text-align: right;
+	margin-top: 10px;
+}
+
 .question {
 	font-weight: bold;
 	font-size: 16pt;
@@ -6,9 +11,8 @@
 }
 
 #update_body {
-	font-size: 11pt;
+	font-size: 12pt;
 	font-family: Helvetica, Arial, sans-serif;
-	font-weight: bold;
 	height: 54px;
 	width: 460px;
 	padding: 2px;
