@@ -17,7 +17,7 @@
 		<div class="container">
 			<div class="span-16 prepend-4 append-4 user">
 				{% if logged_in %}
-					Welcome, <strong>{{ user.nickname }}</strong>!
+					Welcome, <a href="/settings"><strong>{{ user.nickname }}</strong></a>!
 					<a href="{{ auth_url }}">Logout</a>
 				{% else %}
 					<a href="{{ auth_url }}">Login</a>

@@ -10,10 +10,10 @@ from google.appengine.ext import webapp
 from google.appengine.ext.webapp import template
 from google.appengine.ext.webapp.util import run_wsgi_app
 
-from extensions import BaseHandler
-from models import Update
+import extensions
+import models
 
-class MainHandler(BaseHandler):
+class MainHandler(extensions.BaseHandler):
 	def get(self):
 		updates = self.get_updates()
 		self.render('index.html', { 'updates': updates })
@@ -23,17 +23,16 @@ class MainHandler(BaseHandler):
 		if updates is not None:
 			return updates
 		else:
-			updates = Update.gql("ORDER BY posted DESC LIMIT 15")
+			updates = models.Update.gql("ORDER BY posted DESC LIMIT 15")
 			memcache.add("updates", updates, (60 * 60 * 24 * 7))
 			return updates
 
-class UpdateHandler(BaseHandler):
+class UpdateHandler(extensions.BaseHandler):
 	def post(self):
-		update = Update()
+		update = models.Update()
 		
-		user = users.get_current_user()
-		if user:
-			update.author = user
+		if self.current_account:
+			update.author = self.current_account
 		else:
 			self.response.set_status(400)
 			return
@@ -53,10 +52,19 @@ class UpdateHandler(BaseHandler):
 		}
 		self.response.out.write(simplejson.dumps(response))
 
+class SettingsHandler(extensions.BaseHandler):
+	def get(self):
+		self.render('settings.html')
+		
+	def post(self):
+		# save settings
+		pass
+
 application = webapp.WSGIApplication(
 	[
 		('/', MainHandler),
-		('/ajax/update', UpdateHandler)
+		('/ajax/update', UpdateHandler),
+		('/settings', SettingsHandler)
 	],
 	debug=True
 )

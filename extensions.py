@@ -1,10 +1,18 @@
 import os, md5, urllib
+import models
 
 from google.appengine.ext import webapp
 from google.appengine.api import users
 from google.appengine.ext.webapp import template
 
 class BaseHandler(webapp.RequestHandler):
+	current_account = None
+
+	def __init__(self):
+		user = users.get_current_user()
+		if user:
+			self.current_account = models.Account.all().filter('user =', user).get()
+	
 	def render(self, path, template_values={}):
 		user = users.get_current_user()
 		if user:
