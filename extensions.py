@@ -1,5 +1,6 @@
 import os, md5, urllib
 import models
+import logging
 
 from google.appengine.ext import webapp
 from google.appengine.api import users
@@ -8,10 +9,15 @@ from google.appengine.ext.webapp import template
 class BaseHandler(webapp.RequestHandler):
 	current_account = None
 
-	def __init__(self):
+	def initialize(self, request, response):
+		super(BaseHandler, self).initialize(request, response)
 		user = users.get_current_user()
 		if user:
 			self.current_account = models.Account.all().filter('user =', user).get()
+			
+			if not self.current_account and not self.request.uri.endswith('/settings'):
+				self.redirect("/settings")
+				return
 	
 	def render(self, path, template_values={}):
 		user = users.get_current_user()
